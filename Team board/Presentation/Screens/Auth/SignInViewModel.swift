@@ -34,4 +34,20 @@ final class SignInViewModel: ObservableObject {
             }
         }
     }
+
+    func signInAsGuest() {
+        _Concurrency.Task {
+            isLoading = true
+            defer { isLoading = false }
+            do {
+                _ = try await environment.signInGuestUseCase.execute()
+                await MainActor.run {
+                    errorMessage = nil
+                    onSignedIn?()
+                }
+            } catch {
+                errorMessage = error.localizedDescription
+            }
+        }
+    }
 }

@@ -44,12 +44,15 @@ struct FirestoreChatMapper {
             body: body,
             attachments: attachments,
             createdAt: createdAt,
-            isSystemMessage: data["isSystemMessage"] as? Bool ?? false
+            isSystemMessage: data["isSystemMessage"] as? Bool ?? false,
+            voiceNoteURL: (data["voiceNoteURL"] as? String).flatMap(URL.init),
+            voiceDuration: data["voiceDuration"] as? Double,
+            voiceTranscription: data["voiceTranscription"] as? String
         )
     }
 
     func mapMessageData(_ message: ChatMessage) -> [String: Any] {
-        [
+        var payload: [String: Any] = [
             "authorId": message.authorId.rawValue,
             "channelId": message.channelId.rawValue,
             "body": message.body,
@@ -65,6 +68,16 @@ struct FirestoreChatMapper {
             },
             "createdAt": Timestamp(date: message.createdAt)
         ]
+        if let voiceURL = message.voiceNoteURL {
+            payload["voiceNoteURL"] = voiceURL.absoluteString
+        }
+        if let voiceDuration = message.voiceDuration {
+            payload["voiceDuration"] = voiceDuration
+        }
+        if let voiceTranscription = message.voiceTranscription {
+            payload["voiceTranscription"] = voiceTranscription
+        }
+        return payload
     }
 
     func mapChannelData(_ channel: ChatChannel) -> [String: Any] {
@@ -81,4 +94,3 @@ struct FirestoreChatMapper {
     func mapChannelData(_: ChatChannel) -> [String: Any] { [:] }
 #endif
 }
-

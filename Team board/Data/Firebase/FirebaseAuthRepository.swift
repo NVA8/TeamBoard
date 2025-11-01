@@ -38,6 +38,18 @@ struct FirebaseAuthRepository: UserRepository {
 #endif
     }
 
+    func signInAnonymously() async throws -> TeamMember {
+#if canImport(FirebaseAuth)
+        if let current = Auth.auth().currentUser, current.isAnonymous {
+            return try await mapper.map(user: current)
+        }
+        let result = try await Auth.auth().signInAnonymously()
+        return try await mapper.map(user: result.user)
+#else
+        throw RepositoryError.featureUnavailable
+#endif
+    }
+
     func signOut() async throws {
 #if canImport(FirebaseAuth)
         try Auth.auth().signOut()

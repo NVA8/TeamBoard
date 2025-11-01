@@ -8,7 +8,7 @@ enum AppScreen: Hashable {
 
 @MainActor
 final class AppCoordinator: ObservableObject {
-    @Published var path: [AppScreen] = []
+    @Published var activeScreen: AppScreen = .authentication
     @Published var currentTab: MainTab = .boards
 
     private let environment: AppEnvironment
@@ -17,13 +17,22 @@ final class AppCoordinator: ObservableObject {
         self.environment = environment
     }
 
+    func showAuthentication() {
+        activeScreen = .authentication
+    }
+
+    func showMain() {
+        currentTab = .boards
+        activeScreen = .main
+    }
+
     func handleLaunch() {
         FirebaseConfigurationService.shared.configureIfNeeded()
         _Concurrency.Task {
             if let user = try await environment.observeCurrentUserUseCase.execute(), user.isActive {
-                path = [.main]
+                await MainActor.run { self.showMain() }
             } else {
-                path = [.authentication]
+                await MainActor.run { self.showAuthentication() }
             }
         }
     }
@@ -31,9 +40,7 @@ final class AppCoordinator: ObservableObject {
     func signOut() {
         _Concurrency.Task {
             try? await environment.signOutUseCase.execute()
-            await MainActor.run {
-                path = [.authentication]
-            }
+            await MainActor.run { self.showAuthentication() }
         }
     }
 }

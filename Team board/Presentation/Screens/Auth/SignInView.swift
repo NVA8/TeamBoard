@@ -52,6 +52,16 @@ struct SignInView: View {
             .buttonStyle(.borderedProminent)
             .disabled(viewModel.isLoading)
 
+            Button {
+                viewModel.signInAsGuest()
+            } label: {
+                Text("Продолжить как гость")
+                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.bordered)
+            .disabled(viewModel.isLoading)
+
             Spacer()
         }
         .padding(32)
@@ -59,9 +69,11 @@ struct SignInView: View {
             LinearGradient(colors: [.blue.opacity(0.1), .purple.opacity(0.1)], startPoint: .topLeading, endPoint: .bottomTrailing)
                 .ignoresSafeArea()
         )
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
         .onAppear {
             viewModel.onSignedIn = {
-                coordinator.path = [.main]
+                coordinator.showMain()
             }
         }
     }

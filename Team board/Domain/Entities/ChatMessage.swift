@@ -8,6 +8,9 @@ public struct ChatMessage: Identifiable, Codable, Equatable, Sendable {
     public var attachments: [TaskAttachment]
     public var createdAt: Date
     public var isSystemMessage: Bool
+    public var voiceNoteURL: URL?
+    public var voiceDuration: TimeInterval?
+    public var voiceTranscription: String?
 
     public init(
         id: Identifier<ChatMessage> = Identifier(),
@@ -16,7 +19,10 @@ public struct ChatMessage: Identifiable, Codable, Equatable, Sendable {
         body: String,
         attachments: [TaskAttachment] = [],
         createdAt: Date = .now,
-        isSystemMessage: Bool = false
+        isSystemMessage: Bool = false,
+        voiceNoteURL: URL? = nil,
+        voiceDuration: TimeInterval? = nil,
+        voiceTranscription: String? = nil
     ) {
         self.id = id
         self.channelId = channelId
@@ -25,6 +31,9 @@ public struct ChatMessage: Identifiable, Codable, Equatable, Sendable {
         self.attachments = attachments
         self.createdAt = createdAt
         self.isSystemMessage = isSystemMessage
+        self.voiceNoteURL = voiceNoteURL
+        self.voiceDuration = voiceDuration
+        self.voiceTranscription = voiceTranscription
     }
 }
 

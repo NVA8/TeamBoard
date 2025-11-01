@@ -18,10 +18,11 @@ struct FirebaseUserMapper {
         } else {
             role = .contributor
         }
+        let isAnonymous = user.isAnonymous
         return TeamMember(
             id: Identifier(user.uid),
-            displayName: user.displayName ?? "Unknown",
-            email: user.email ?? "",
+            displayName: user.displayName ?? (isAnonymous ? "Гость" : "Unknown"),
+            email: user.email ?? (isAnonymous ? "" : ""),
             avatarURL: user.photoURL,
             role: role,
             isActive: true
@@ -61,4 +62,3 @@ struct FirebaseUserMapper {
     }
 #endif
 }
-

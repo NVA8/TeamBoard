@@ -12,6 +12,10 @@ public protocol SignOutUseCase: Sendable {
     func execute() async throws
 }
 
+public protocol SignInGuestUseCase: Sendable {
+    func execute() async throws -> TeamMember
+}
+
 public struct DefaultObserveCurrentUserUseCase: ObserveCurrentUserUseCase {
     private let repository: UserRepository
 
@@ -48,3 +52,14 @@ public struct DefaultSignOutUseCase: SignOutUseCase {
     }
 }
 
+public struct DefaultSignInGuestUseCase: SignInGuestUseCase {
+    private let repository: UserRepository
+
+    public init(repository: UserRepository) {
+        self.repository = repository
+    }
+
+    public func execute() async throws -> TeamMember {
+        try await repository.signInAnonymously()
+    }
+}

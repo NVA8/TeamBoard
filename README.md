@@ -8,7 +8,7 @@ TeamBoard is a SwiftUI portfolio project that demonstrates how to build an enter
 - **Modern SwiftUI** interface with matched geometry animations, drag & drop, and context menus
 - **Actionable analytics** that visualise throughput, velocity, and completion KPIs
 
-## 📋 Features
+##  Features
 
 - Kanban boards with drag & drop tasks, context menus, and matched geometry transitions
 - Task lifecycle management: priorities, statuses, attachments, comments, due dates
@@ -19,7 +19,7 @@ TeamBoard is a SwiftUI portfolio project that demonstrates how to build an enter
 - Push notifications for new tasks, mentions, and chat messages
 - Offline bootstrap from CoreData cache with Firestore delta syncing
 
-## 🧠 Architecture
+##  Architecture
 
 Clean Architecture split into `Domain`, `Data`, and `Presentation` layers:
 
@@ -29,7 +29,7 @@ Clean Architecture split into `Domain`, `Data`, and `Presentation` layers:
 
 🔎 For diagrams and deeper notes, see `Docs/Architecture.md`.
 
-## 🧰 Tech Stack
+##  Tech Stack
 
 - SwiftUI 5 + Combine + async/await
 - Firebase Auth, Firestore, and Storage
@@ -39,7 +39,7 @@ Clean Architecture split into `Domain`, `Data`, and `Presentation` layers:
 - UserNotifications + APNS push tokens
 - MatchedGeometryEffect, `Transferable`, and `DropDestination` for fluid drag & drop
 
-## ⚙️ Installation
+##  Installation
 
 1. Clone the repository and open `Team board.xcodeproj` (Xcode 16 or newer recommended).
 2. Add your Firebase configuration:
@@ -56,13 +56,13 @@ Clean Architecture split into `Domain`, `Data`, and `Presentation` layers:
    - Upload the APNS key to Firebase Cloud Messaging if you plan to test notifications.
 5. Run the app on a device or simulator with iOS 18.
 
-## 🧪 Testing
+##  Testing
 
 - Unit tests target domain use cases with fake repositories (`Team boardTests`).
 - UI tests cover critical flows like authentication, board interactions, drag & drop, and analytics (`Team boardUITests`).
 - Extend with snapshot tests for animated layouts if desired.
 
-## 📸 Portfolio Assets
+## Portfolio Assets
 
 To showcase the project on GitHub or your website:
 
@@ -74,7 +74,7 @@ To showcase the project on GitHub or your website:
 2. Export short video/GIF demonstrating drag & drop and matched geometry transitions.
 3. Place assets in `Docs/Assets/` and embed them in the README (placeholder folder ready to be created).
 
-## 🚀 Roadmap Ideas
+##  Roadmap Ideas
 
 - Real push notification pipeline (Cloud Functions for Firestore triggers)
 - Rich text editor for task descriptions and chat messages
