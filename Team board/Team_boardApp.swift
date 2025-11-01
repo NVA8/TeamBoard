@@ -6,27 +6,37 @@
 //
 
 import SwiftUI
-import SwiftData
+#if canImport(UIKit)
+import UIKit
+#endif
 
 @main
 struct Team_boardApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
+#if canImport(UIKit)
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+#endif
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AppRootView()
         }
-        .modelContainer(sharedModelContainer)
     }
 }
+
+#if canImport(UIKit)
+final class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
+    ) -> Bool {
+        FirebaseConfigurationService.shared.configureIfNeeded()
+        return true
+    }
+
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        _Concurrency.Task {
+            try? await AppEnvironment().notificationRepository.updateDeviceToken(deviceToken)
+        }
+    }
+}
+#endif
