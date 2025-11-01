@@ -27,7 +27,7 @@ Clean Architecture split into `Domain`, `Data`, and `Presentation` layers:
 - **Data**: Firebase repositories, CoreData cache actor, and mappers for DTO ↔︎ domain mapping.
 - **Presentation**: SwiftUI scenes, view models, and the `AppCoordinator` for navigation.
 
-🔎 For diagrams and deeper notes, see `Docs/Architecture.md`.
+ For diagrams and deeper notes, see `Docs/Architecture.md`.
 
 ##  Tech Stack
 
